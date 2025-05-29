@@ -1,0 +1,108 @@
+/* Elimina márgenes y padding por defecto, y asegura que el modelo de caja
+incluya padding y borde dentro del tamaño total */
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+/* Estilo general del body de la página */
+body {
+display: flex; /* Activa Flexbox para centrar contenido */
+justify-content: center; /* Centra horizontalmente el contenido */
+align-items: center; /* Centra verticalmente */
+min-height: 100vh; /* Ocupa al menos toda la altura de la ventana */
+background: url(fondo3.jpg); /* Imagen de fondo */
+background-size: cover; /* Hace que la imagen de fondo cubra todo el
+espacio */
+transform-style: preserve-3d; /* Mantiene el efecto 3D para los hijos */
+}
+/* Contenedor de la galería 3D */
+.box {
+position: relative; /* Contexto de posicionamiento para los hijos con
+position: absolute */
+width: 200px; /* Ancho del contenedor */
+height: 200px; /* Alto del contenedor */
+transform-style: preserve-3d; /* Habilita el uso de transformaciones 3D
+para los hijos */
+transition: 1.5s; /* Suaviza la animación al rotar */
+transform: perspective(1000px) rotateY(0deg); /* Perspectiva 3D inicial
+con rotación en 0 grados */
+}
+/* Cada imagen dentro del carrusel está contenida en un <span> */
+.box span {
+position: absolute; /* Posiciona cada span en relación al contenedor
+.box */
+top: 0; /* Alinea en la parte superior del contenedor */
+left: 0; /* Alinea en la parte izquierda del contenedor */
+width: 100%; /* Ocupa todo el ancho del contenedor (.box) */
+height: 100%; /* Ocupa todo el alto del contenedor (.box) */
+transform-origin: center; /* Punto desde donde se aplica la rotación (el
+centro) */
+transform-style: preserve-3d; /* Permite transformaciones 3D a los hijos
+*/
+/* Cada imagen se rota en Y (multiplicando por el índice --i) y se aleja
+del centro (Z) */
+transform: rotateY(calc(var(--i) * 45deg)) translateZ(300px);
+/* Reflejo inferior de cada imagen con transparencia */
+-webkit-box-reflect: below 0px linear-gradient(transparent, #0004);
+}
+/* Estilo de las imágenes dentro de cada span */
+.box span img {
+position: absolute; /* Posicionamiento absoluto dentro del span */
+top: 0; /* Parte superior del span */
+left: 0; /* Parte izquierda del span */
+width: 100%; /* Ancho completo del span */
+height: 100%; /* Alto completo del span */
+object-fit: cover; /* Asegura que la imagen se escale para llenar el
+contenedor sin distorsión */
+user-select: none; /* Evita que el usuario pueda seleccionar la imagen
+*/
+}
+/* Contenedor de los botones de navegación */
+.btns {
+position: absolute; /* Posicionamiento absoluto dentro del body */
+bottom: 100px; /* Distancia desde la parte inferior de la pantalla */
+display: flex; /* Usa Flexbox para alinear los botones */
+gap: 30px; /* Espacio entre los botones */
+}
+/* Estilo general de cada botón */
+.btns .btn {
+position: relative; /* Necesario para posicionar el pseudo-elemento
+::before */
+width: 60px; /* Ancho del botón */
+height: 60px; /* Alto del botón */
+border: 2px solid #fff; /* Borde blanco de 2 píxeles */
+border-radius: 50%; /* Hace que el botón sea circular */
+display: flex; /* Flexbox para centrar la flecha */
+justify-content: center; /* Centra horizontalmente */
+align-items: center; /* Centra verticalmente */
+cursor: pointer; /* Cursor tipo mano al pasar por encima */
+}
+/* Efecto visual al hacer clic en un botón */
+.btns .btn:active {
+background: #fff; /* Cambia el fondo del botón a blanco */
+}
+/* Flecha dentro de los botones, creada con bordes */
+.btns .btn::before {
+content: ''; /* Elemento sin contenido visible, solo para estilos */
+position: absolute; /* Posición absoluta dentro del botón */
+width: 15px; /* Ancho del símbolo de flecha */
+height: 15px; /* Alto del símbolo de flecha */
+border-top: 3px solid #fff; /* Parte superior de la flecha */
+border-right: 3px solid #fff; /* Parte derecha de la flecha */
+/* Rotación de 45° para que los bordes formen una flecha hacia la
+derecha */
+transform: rotate(45deg) translate(-2.5px, 2.5px);
+}
+/* Flecha apuntando a la izquierda para el botón "prev" */
+.btns .btn.prev::before {
+/* Rotación de 225° para invertir la dirección de la flecha */
+transform: rotate(225deg) translate(-2.5px, 2.5px);
+}
+/* Cambia el color de la flecha cuando el botón es presionado */
+.btns .btn:active::before {
+border-top: 3px solid #000; /* Cambia el color del borde superior a
+negro */
+border-right: 3px solid #000; /* Cambia el color del borde derecho a
+negro */
+}
